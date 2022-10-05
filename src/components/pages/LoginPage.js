@@ -1,21 +1,22 @@
-import React, { useContext, useState } from "react";
-import Box from "@mui/material/Box";
-import Layout from "../layout/Layout";
-import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
-import UsernameField from "../textFields/UsernameField";
-import PasswordField from "../textFields/PasswordField";
-import { useDispatch, useSelector } from "react-redux";
-import { signIn, signOut } from "../../redux-state/userSlice";
+import React, { useState } from 'react';
+// import {useContext} from 'react;
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import Layout from '../layout/Layout';
+import UsernameField from '../textFields/UsernameField';
+import PasswordField from '../textFields/PasswordField';
+import { signIn, signOut } from '../../redux-state/userSlice';
 
-const LoginPage = () => {
-  let navigate = useNavigate();
+function LoginPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [showPassword, setShowPassword] = useState(false);
   const [userData, setUserData] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   });
 
   const handleChange = (prop) => (event) => {
@@ -23,7 +24,8 @@ const LoginPage = () => {
   };
 
   const onLogin = () => {
-    dispatch(signIn(userData)), navigate("/home");
+    dispatch(signIn(userData));
+    navigate('/home');
   };
 
   const onLogout = () => {
@@ -34,10 +36,10 @@ const LoginPage = () => {
     <Layout>
       {!user ? (
         <Box
-          display='flex'
-          flexDirection='column'
-          alignItems='center'
-          style={{ marginTop: "25vh" }}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          style={{ marginTop: '25vh' }}
         >
           <UsernameField
             userData={userData}
@@ -52,24 +54,24 @@ const LoginPage = () => {
             handleChange={handleChange}
           />
           <br />
-          <Button variant='contained' color='success' onClick={onLogin}>
+          <Button variant="contained" color="success" onClick={onLogin}>
             Login
           </Button>
         </Box>
       ) : (
         <Box
-          display='flex'
-          flexDirection='column'
-          alignItems='center'
-          style={{ marginTop: "35vh" }}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          style={{ marginTop: '35vh' }}
         >
-          <Button variant='contained' color='error' onClick={onLogout}>
+          <Button variant="contained" color="error" onClick={onLogout}>
             Logout
           </Button>
         </Box>
       )}
     </Layout>
   );
-};
+}
 
 export default LoginPage;

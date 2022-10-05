@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const addToCartReducer = (state, action) => {
   // Check if the product already exist in the shopping cart
   const productFound = state.find(
-    (cartItem) => cartItem.id === action.payload.id
+    (cartItem) => cartItem.id === action.payload.id,
   );
 
   if (productFound) {
@@ -23,15 +23,14 @@ const addToCartReducer = (state, action) => {
     });
 
     return newShoppingCart;
-  } else {
-    // if we don't find the product, we want to add it to the shopping cart for the first time.
-    const newCartItem = {
-      ...action.payload,
-      quantity: 1,
-      total: action.payload.price,
-    };
-    return [...state, newCartItem];
   }
+  // if we don't find the product, we want to add it to the shopping cart for the first time.
+  const newCartItem = {
+    ...action.payload,
+    quantity: 1,
+    total: action.payload.price,
+  };
+  return [...state, newCartItem];
 };
 
 const removeFromCartReducer = (state, action) => {
@@ -52,14 +51,13 @@ const removeFromCartReducer = (state, action) => {
       return item;
     }
   });
-
   return filteredCart;
 };
 
-//Creating a slice, splits your state.
+// Creating a slice, splits your state.
 const shoppingCartSlice = createSlice({
-  name: "shoppingCart",
-  initialState: [], //Redux does not accept undefined as a default state.
+  name: 'shoppingCart',
+  initialState: [], // Redux does not accept undefined as a default state.
   reducers: {
     addToCart: (state, action) => addToCartReducer(state, action),
     removeFromCart: (state, action) => removeFromCartReducer(state, action),
@@ -67,7 +65,6 @@ const shoppingCartSlice = createSlice({
   },
 });
 
-//Action creators. functions that create our actions when we call them.
-export const { addToCart, removeFromCart, emptyCart } =
-  shoppingCartSlice.actions;
+// Action creators. functions that create our actions when we call them.
+export const { addToCart, removeFromCart, emptyCart } = shoppingCartSlice.actions;
 export const cartReducer = shoppingCartSlice.reducer;
