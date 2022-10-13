@@ -34,7 +34,7 @@ const addToCartReducer = (state, action) => {
 };
 
 const removeFromCartReducer = (state, action) => {
-  // remove item from cart that match the product id.
+  // remove item from cart that matches the product id.
   const newCart = state.map((item) => {
     if (item.id === action.payload) {
       return {

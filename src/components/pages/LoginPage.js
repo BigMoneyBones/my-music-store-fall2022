@@ -8,6 +8,8 @@ import Layout from '../layout/Layout';
 import UsernameField from '../textFields/UsernameField';
 import PasswordField from '../textFields/PasswordField';
 import { signIn, signOut } from '../../redux-state/userSlice';
+// import Axios from '../../utils/Axios';
+// import { sampleUserData } from '../../mockData';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -22,6 +24,16 @@ function LoginPage() {
   const handleChange = (prop) => (event) => {
     setUserData({ ...userData, [prop]: event.target.value });
   };
+
+  // const onSubmit = async () => {
+  //   // Call the back end with the credentials data
+  //   const response = await Axios.post('/sign-in', { credentials: signInForm });
+
+  //   const fetchedUser = response.data.user;
+  //   // Insert the response user into the state
+
+  //   dispatch(signIn(fetchedUser));
+  // };
 
   const onLogin = () => {
     dispatch(signIn(userData));
