@@ -1,26 +1,34 @@
-import React from 'react';
+import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { Provider } from 'react-redux';
+import CartPage from './components/pages/CartPage';
 import HomePage from './components/pages/HomePage';
-import LoginPage from './components/pages/LoginPage';
-import ShoppingCart from './components/pages/ShoppingCart';
+import SignInPage from './components/pages/SignInPage';
+import UserRegistrationPage from './components/pages/UserRegistrationPage';
+import ShoppingCartContextProvider from './context/shoppingCartContext';
 import CustomThemeProvider from './CustomThemeProvider';
 import store from './redux-state/store';
-import UserRegistrationPage from './components/pages/UserRegistrationPage';
+import './resetStyles.css';
 
 function App() {
   return (
     <Provider store={store}>
       <CustomThemeProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/sign-in" element={<LoginPage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="/cart" element={<ShoppingCart />} />
-            <Route path="/register-user" element={<UserRegistrationPage />} />
-          </Routes>
-        </BrowserRouter>
+        <ShoppingCartContextProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/user" element={<SignInPage />} />
+              <Route path="/register-user" element={<UserRegistrationPage />} />
+              <Route
+                path="/cart"
+                element={(
+                  <CartPage />
+                  )}
+              />
+            </Routes>
+          </BrowserRouter>
+        </ShoppingCartContextProvider>
       </CustomThemeProvider>
     </Provider>
   );

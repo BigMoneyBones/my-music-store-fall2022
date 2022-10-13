@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Creating a slice, splits your state.
+// This is how you split your state.
 const userSlice = createSlice({
   name: 'user',
-  initialState: null, // Redux does not accept undefined as a default state.
+  initialState: null, // Redux does not accept undefined as a default value.
   reducers: {
     signIn: (state, action) => action.payload,
     signOut: () => null,
   },
 });
 
-// Action creators. functions that create our actions when we call them.
+// Action creators. functions that when we call it, create our actions.
 export const { signIn, signOut } = userSlice.actions;
-export const userReducer = userSlice.reducer;
+export const { reducer } = userSlice;

@@ -22,34 +22,29 @@ function UserRegistrationPage() {
   });
 
   const handleSubmit = async (event) => {
-    // 1. Make sure form is correct. AKA validation.
+    // Make sure our form is correct. a.k.a. validation.
     event.preventDefault();
+
     try {
-    // 2. if everthing is valid in the form, submit the network request.
+      // if everything is valid in the form
+      // submit the network request.
       const response = await Axios.post('/register-user', {
         ...userRegistrationForm,
-      // SAME AS ABOVE
-      // firstName: userRegistrationForm.firstName,
-      // lastName: userRegistrationForm.lastName,
-      // email: userRegistrationForm.email,
-      // password: userRegistrationForm.password,
-      // profilePicture: userRegistrationForm.profilePicture,
       });
+
       const { user } = response.data;
-      // 3. receive user information from server and put it in the state.
+      // receive user information from server and put it in the state.
       dispatch(signIn(user));
 
       // Navigate back to home page
       navigate('/');
     } catch (e) {
-      // console.log('Error Message: ', e);
-      // send a copy of errors to a database somewhere
+      // send a copy of your errors to a database
       setError(e.message);
     }
   };
 
   return (
-
     <Layout>
       <Box mb={4}>
         <Typography fontWeight="bold">Create User Account</Typography>
@@ -58,7 +53,7 @@ function UserRegistrationPage() {
         <Box mb={4}>
           <TextField
             id="firstName"
-            label="First Name"
+            label="firstName"
             autoComplete="given-name"
             value={userRegistrationForm.firstName}
             onChange={(event) => setUserRegistrationForm({
@@ -71,8 +66,8 @@ function UserRegistrationPage() {
         <Box mb={4}>
           <TextField
             id="lastName"
-            label="Last Name"
             autoComplete="family-name"
+            label="lastName"
             value={userRegistrationForm.lastName}
             onChange={(event) => setUserRegistrationForm({
               ...userRegistrationForm,
@@ -84,7 +79,7 @@ function UserRegistrationPage() {
         <Box mb={4}>
           <TextField
             id="email"
-            label="Email"
+            label="email"
             autoComplete="email"
             value={userRegistrationForm.email}
             onChange={(event) => setUserRegistrationForm({
@@ -97,7 +92,7 @@ function UserRegistrationPage() {
         <Box mb={4}>
           <TextField
             id="password"
-            label="Password"
+            label="password"
             type="password"
             value={userRegistrationForm.password}
             onChange={(event) => setUserRegistrationForm({
@@ -110,7 +105,7 @@ function UserRegistrationPage() {
         <Box mb={4}>
           <TextField
             id="profilePicture"
-            label="Profile Picture"
+            label="profilePicture"
             value={userRegistrationForm.profilePicture}
             onChange={(event) => setUserRegistrationForm({
               ...userRegistrationForm,
@@ -121,7 +116,7 @@ function UserRegistrationPage() {
         </Box>
         {error && (
         <Box border="1px solid red" borderRadius="5px" p={3} mb={2}>
-          <Typography textAlign="center">There was an error please try again later</Typography>
+          <Typography textAlign="center">There was an error please try again later.</Typography>
           <Typography textAlign="center">
             Error Message:
             {' '}

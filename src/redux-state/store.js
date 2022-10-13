@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { userReducer } from './userSlice';
-import { cartReducer } from './shoppingCartSlice';
+import { reducer } from './userSlice';
 
 const preloadedState = JSON.parse(localStorage.getItem('application'))
   ? JSON.parse(localStorage.getItem('application'))
@@ -8,8 +7,7 @@ const preloadedState = JSON.parse(localStorage.getItem('application'))
 
 const store = configureStore({
   reducer: {
-    user: userReducer,
-    shoppingCart: cartReducer,
+    user: reducer,
   },
   preloadedState,
 });

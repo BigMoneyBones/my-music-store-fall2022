@@ -1,79 +1,80 @@
-import React from 'react';
-// import {useContext} from 'react;
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Badge } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-// import Switch from '@mui/material/Switch';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormGroup from '@mui/material/FormGroup';
-// import MenuItem from '@mui/material/MenuItem';
-// import Menu from '@mui/material/Menu';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Badge from '@mui/material/Badge';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { sampleUserData } from '../../mockData';
+import { Link } from 'react-router-dom';
+import { useShoppingCart } from '../../context/shoppingCartContext';
 
-export default function MenuAppBar() {
+export default function Header() {
   const user = useSelector((state) => state.user);
-  const shoppingCart = useSelector((state) => state.shoppingCart);
-  const navigate = useNavigate();
+
+  const { shoppingCart } = useShoppingCart();
+
+  const cartCount = shoppingCart.reduce((acc, cartItem) => acc + cartItem.quantity, 0);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" bgcolor="red">
+      <AppBar position="static">
         <Toolbar>
-          <Typography
-            variant="h6"
-            fontWeight="bold"
-            component="div"
-            sx={{ flexGrow: 1, '&:hover': { cursor: 'pointer' } }}
-            onClick={() => navigate('/home')}
-          >
-            MyMusicStore.com
-          </Typography>
-          <div>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-              onClick={() => navigate('/cart')}
-            >
-              <Badge
-                badgeContent={shoppingCart.reduce(
-                  (acc, item) => acc + item.quantity,
-                  0,
-                )}
-                color="success"
+          <Box sx={{ flexGrow: 1, m: 1 }}>
+            <Link to="/">
+              <Typography variant="h6" fontWeight="bold" component="div">
+                MyMusicStore.com
+              </Typography>
+            </Link>
+          </Box>
+          <Box alignContent="center">
+            <Link to="/user">
+              {
+                user ? (
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    color="inherit"
+                  >
+                    <img
+                      style={{
+                        width: '20px', height: '20px', borderRadius: '20px', border: '2px solid white',
+                      }}
+                      src={user.profilePicture}
+                      alt="profile pic"
+                    />
+                  </IconButton>
+                )
+                  : (
+                    <IconButton
+                      size="large"
+                      aria-label="account of current user"
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      color="inherit"
+                    >
+                      <AccountCircle />
+                    </IconButton>
+                  )
+              }
+            </Link>
+            <Link to="/cart">
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                color="inherit"
               >
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-              onClick={() => navigate('/sign-in')}
-            >
-              {user ? (
-                <img
-                  src={sampleUserData.profilePicture}
-                  alt="profile"
-                  style={{ borderRadius: '50%', height: '38px' }}
-                />
-              ) : (
-                <AccountCircle />
-              )}
-            </IconButton>
-          </div>
+                <Badge badgeContent={cartCount} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            </Link>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
