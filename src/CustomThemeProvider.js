@@ -1,3 +1,4 @@
+import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
 
 const TEAL_COLOR = '#17637B';

@@ -43,8 +43,8 @@ export default function Header() {
                       style={{
                         width: '20px', height: '20px', borderRadius: '20px', border: '2px solid white',
                       }}
+                      alt="user profile"
                       src={user.profilePicture}
-                      alt="profile pic"
                     />
                   </IconButton>
                 )

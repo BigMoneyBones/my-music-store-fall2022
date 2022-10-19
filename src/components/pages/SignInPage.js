@@ -1,53 +1,44 @@
 import {
   Box, Button, TextField, Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { sampleUserData } from '../../mockData';
-import { signIn, signOut } from '../../redux-state/userSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import { signIn } from '../../redux-state/userSlice';
+import Axios from '../../utils/Axios';
 import Layout from '../layout/Layout';
 
 function SignInPage() {
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/user');
+    }
+  }, [user]);
 
   const dispatch = useDispatch();
+  const [error, setError] = useState();
 
   const [signInForm, setSignInForm] = useState({
     email: '',
     password: '',
   });
 
-  const onSubmit = () => {
-    // set the mock user as the user
-    // signIn(sampleUserData);
+  const onSubmit = async () => {
+    // call the back end with the credentials data
+    const response = await Axios.post('/sign-in', { credentials: signInForm });
 
-    dispatch(signIn(sampleUserData));
+    // insert the response user into the state
+    const fetchedUser = response.data.user;
+
+    dispatch(signIn(fetchedUser));
   };
-
-  const handleSignOut = () => {
-    dispatch(signOut());
-  };
-
-  if (user) {
-    return (
-      <Layout>
-        <Box mb={4}>
-          <Typography>
-            Hi
-            {' '}
-            {user.firstName}
-            !
-          </Typography>
-        </Box>
-        <Box>
-          <Button variant="contained" onClick={handleSignOut}>Sign out</Button>
-        </Box>
-      </Layout>
-    );
-  }
 
   return (
     <Layout>
+      {error && <Box><Typography>{error}</Typography></Box>}
       <Box mb={4}>
         <Typography>Sign In</Typography>
       </Box>
@@ -61,7 +52,7 @@ function SignInPage() {
       </Box>
       <Box mb={4}>
         <TextField
-          id="password "
+          id="password"
           label="Password"
           type="password"
           value={signInForm.password}
@@ -70,6 +61,13 @@ function SignInPage() {
       </Box>
       <Box>
         <Button variant="contained" onClick={onSubmit}>Sign In</Button>
+      </Box>
+      <Box py={2}>
+        <Link to="/register-user">
+          <Typography sx={{ textDecoration: 'underline' }}>
+            Register new account
+          </Typography>
+        </Link>
       </Box>
     </Layout>
   );
